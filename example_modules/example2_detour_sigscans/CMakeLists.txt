@@ -1,0 +1,1 @@
+add_gmlab_module(example2_detour_sigscans "module.cpp")

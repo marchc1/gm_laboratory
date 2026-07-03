@@ -1,0 +1,1 @@
+add_gmlab_module(example5_network_property_modding "module.cpp")

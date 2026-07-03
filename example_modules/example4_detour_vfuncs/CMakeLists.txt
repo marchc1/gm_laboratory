@@ -1,0 +1,1 @@
+add_gmlab_module(example4_detour_vfuncs "module.cpp")

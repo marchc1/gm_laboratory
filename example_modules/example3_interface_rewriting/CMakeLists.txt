@@ -1,0 +1,1 @@
+add_gmlab_module(example3_interface_rewriting "module.cpp")
