@@ -1,8 +1,11 @@
 #include "native/modules.h"
 
 #include <cstdio>
+#include <vector>
 
 #include <windows.h>
+
+#include "KeyValues.h"
 
 #include "native/detour_manager.h"
 #include "native/log.h"
@@ -64,7 +67,42 @@ namespace gm_laboratory {
 		return true;
 	}
 
+	static KeyValues* LoadBlacklist(const char* folder) {
+		char path[MAX_PATH];
+		_snprintf_s(path, _TRUNCATE, "%s\\blacklist.cfg", folder);
+
+		FILE* file = fopen(path, "rb");
+		if (!file)
+			return nullptr;
+
+		fseek(file, 0, SEEK_END);
+		long size = ftell(file);
+		fseek(file, 0, SEEK_SET);
+
+		std::vector<char> buffer(size + 1);
+		if (size > 0)
+			fread(buffer.data(), 1, size, file);
+		buffer[size] = '\0';
+		fclose(file);
+
+		KeyValues* blacklist = new KeyValues("blacklist");
+		if (!blacklist->LoadFromBuffer(path, buffer.data())) {
+			Log("modules", "Failed to parse blacklist %s\n", path);
+			blacklist->deleteThis();
+			return nullptr;
+		}
+
+		Log("modules", "Loaded blacklist %s\n", path);
+		return blacklist;
+	}
+
+	static bool IsBlacklisted(KeyValues* blacklist, const char* fileName) {
+		return blacklist && blacklist->GetInt(fileName, 0) != 0;
+	}
+
 	int Modules::LoadFolder(const char* folder) {
+		KeyValues* blacklist = LoadBlacklist(folder);
+
 		char search[MAX_PATH];
 		_snprintf_s(search, _TRUNCATE, "%s\\*.dll", folder);
 
@@ -72,6 +110,8 @@ namespace gm_laboratory {
 		HANDLE find = FindFirstFileA(search, &fd);
 		if (find == INVALID_HANDLE_VALUE) {
 			Log("modules", "No modules found in %s\n", folder);
+			if (blacklist)
+				blacklist->deleteThis();
 			return 0;
 		}
 
@@ -80,6 +120,13 @@ namespace gm_laboratory {
 			if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 				continue;
 
+			char filename[MAX_PATH];
+			V_StripExtension(fd.cFileName, filename, sizeof(filename));
+			if (IsBlacklisted(blacklist, filename)) {
+				Log("modules", "Skipping blacklisted module %s\n", fd.cFileName);
+				continue;
+			}
+
 			char path[MAX_PATH];
 			_snprintf_s(path, _TRUNCATE, "%s\\%s", folder, fd.cFileName);
 			if (Load(path))
@@ -87,6 +134,10 @@ namespace gm_laboratory {
 		} while (FindNextFileA(find, &fd));
 
 		FindClose(find);
+
+		if (blacklist)
+			blacklist->deleteThis();
+
 		return loaded;
 	}
 
