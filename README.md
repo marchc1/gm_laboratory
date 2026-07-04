@@ -1,6 +1,6 @@
 # gm_laboratory
 
-A native modding experiments toolkit for Garry's Mod (only for x86-64 branch at the moment)
+A native modding experiments toolkit for Garry's Mod (only for x86-64 branch at the moment). Previously existed as https://github.com/marchc1/source-launchers-cs. While I still really wish this could be done in C#, getting ABI's to work was just going to be way too much, so I gave up on that approach.
 
 To use it, you will need to define GARRYSMOD_INSTALL_DIR in your environment variables. Just set this to the GarrysMod path with no trailing slash.
 
@@ -50,3 +50,5 @@ MODULE_END()
 `custom_modules/` and `example_modules/` are both scanned automatically by CMake, so any subfolder with a `CMakeLists.txt` gets built
 
 Some example modules have been provided, YMMV as I am still working on them
+
+Note that I do not regularly do C++ development so apologies if this is a bit weirdly put together. It's also a direct conversion of some C# code and ideas from launchers-cs, so it has some weird patterns.
