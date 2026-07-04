@@ -143,7 +143,7 @@ int Run(_In_ HINSTANCE instance, _In_opt_ HINSTANCE old_instance, _In_ LPSTR cmd
 		return static_cast<int>(rc);
 
 	char module_name[MAX_PATH];
-	if (!::GetModuleFileNameA(instance, module_name, MAX_PATH)) 
+	if (!::GetModuleFileNameA(instance, module_name, MAX_PATH))
 		return ShowErrorBoxAndExitWithCode("Please check game installed in the folder with less than " VALVE_OB_TOSTRING(MAX_PATH) " chars deep.\n\nUnable to get module file name from GetModuleFileName.", GetLastErrorCode());
 
 	char base_directory_path[MAX_PATH], launcher_dll_path[MAX_PATH];
@@ -174,8 +174,10 @@ int Run(_In_ HINSTANCE instance, _In_opt_ HINSTANCE old_instance, _In_ LPSTR cmd
 		return ShowErrorBoxAndExitWithCode(user_error, errc);
 	}
 
-	if(!AllocConsole())
-		return ShowErrorBoxAndExitWithCode("AllocConsole failure.", GetLastErrorCode());
+	if (GetConsoleWindow() == NULL) 
+		if (!AttachConsole(ATTACH_PARENT_PROCESS))
+			if (!AllocConsole()) 
+				return ShowErrorBoxAndExitWithCode("AllocConsole failure.", GetLastErrorCode());
 
 	// wtf
 	FILE* dummyFile;
