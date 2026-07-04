@@ -5,8 +5,10 @@
 
 namespace gm_laboratory {
 	using _Host_RunFrame__Main = void (*)(double);
+	using Host_Init__Main = void (*)(bool);
 
 	static _Host_RunFrame__Main _Host_RunFrame_Original;
+	static Host_Init__Main Host_Init_Original;
 
 	static void _Host_RunFrame_Detour(double time) {
 		Hooks::PreHostRunFrame.Invoke(time);
@@ -14,9 +16,16 @@ namespace gm_laboratory {
 		Hooks::PostHostRunFrame.Invoke(time);
 	}
 
+	static void Host_Init_Detour(bool dedicated) {
+		Hooks::PreHostInit.Invoke(dedicated);
+		Host_Init_Original(dedicated);
+		Hooks::PostHostInit.Invoke(dedicated);
+	}
+
 	struct PlugIntoHost : IImplementsDetours {
 		void SetupWin64(DetourSetupContext& ctx) override {
 			_Host_RunFrame_Original = reinterpret_cast<_Host_RunFrame__Main>(ctx.AddDetour(ENGINE_DLL, _Host_RunFrame_SIG, reinterpret_cast<void*>(&_Host_RunFrame_Detour)));
+			Host_Init_Original = reinterpret_cast<Host_Init__Main>(ctx.AddDetour(ENGINE_DLL, Host_Init_SIG, reinterpret_cast<void*>(&Host_Init_Detour)));
 		}
 	};
 

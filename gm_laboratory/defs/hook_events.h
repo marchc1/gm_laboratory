@@ -1,4 +1,10 @@
 #ifdef DEFINE_MODULE_HOOK
+/// <summary> Runs right before Host_Init </summary>
+DEFINE_MODULE_HOOK(void, PreHostInit, bool)
+
+/// <summary> Runs right after Host_Init </summary>
+DEFINE_MODULE_HOOK(void, PostHostInit, bool)
+
 /// <summary> Runs right before _Host_RunFrame </summary>
 DEFINE_MODULE_HOOK(void, PreHostRunFrame, double)
 

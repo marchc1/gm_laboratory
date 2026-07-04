@@ -34,6 +34,7 @@ namespace gm_laboratory {
     DECLARE_SIGSCAN_SIGNATURE_WIN64(BootAppSystemGroup__Create, "48 8B C4 48 89 58 ? 48 89 78")
     DECLARE_SIGSCAN_SIGNATURE_WIN64(CModAppSystemGroup__Main, "40 53 48 83 EC ? 80 B9 ? ? ? ? ? BB")
     DECLARE_SIGSCAN_SIGNATURE_WIN64(_Host_RunFrame, "48 8B C4 48 89 58 ? 48 89 68 ? F3 0F 11 40")
+    DECLARE_SIGSCAN_SIGNATURE_WIN64(Host_Init, "48 89 5C 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 0F 57 C0")
 }
 
 #undef DECLARE_SIGSCAN_SIGNATURE
