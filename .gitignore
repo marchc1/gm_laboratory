@@ -406,3 +406,9 @@ out/*
 
 # Can define your own modules here to build
 custom_modules/*/
+
+# Source SDK import libs are ignored by default (see x64/ rule above),
+# but these two are required to link and are tracked deliberately.
+!third_party/source-sdk/lib/public/x64/
+!third_party/source-sdk/lib/public/x64/tier0.lib
+!third_party/source-sdk/lib/public/x64/vstdlib.lib
