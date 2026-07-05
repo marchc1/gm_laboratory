@@ -29,3 +29,4 @@ add_subdirectory ("example_modules")
 
 get_property(gmlab_modules GLOBAL PROPERTY GMLAB_MODULE_TARGETS)
 add_dependencies(gm_laboratory_launcher ${gmlab_modules})
+add_dependencies(gm_laboratory_dedicated ${gmlab_modules})
