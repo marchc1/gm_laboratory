@@ -28,20 +28,17 @@ namespace gm_laboratory {
 
 		bool g_builtinsRegistered = false;
 
+	}
+
+	void RegisterCvarBrowser();
+
+	namespace {
+
 		const float kIconSize = 48.0f;
 		const float kIconSpacing = 14.0f;
 		const float kPadding = 12.0f;
 		const float kJumpHeight = 16.0f;
 		const float kLaunchTime = 0.5f;
-
-		void DrawWelcome(bool* p_open) {
-			if (ImGui::Begin("Laboratory", p_open)) {
-				ImGui::TextUnformatted("gm_laboratory");
-				ImGui::Separator();
-				ImGui::TextWrapped("Open tools from the dock below. Windows can be docked to each other or floated freely inside the game window.");
-			}
-			ImGui::End();
-		}
 
 		void DrawImGuiDemo(bool* p_open) {
 			ImGui::ShowDemoWindow(p_open);
@@ -60,14 +57,9 @@ namespace gm_laboratory {
 				return;
 			g_builtinsRegistered = true;
 
-			LabAppDesc d{};
-			d.id = "core.welcome";
-			d.title = "Laboratory";
-			d.shortLabel = "Lab";
-			d.accent = IM_COL32(96, 148, 226, 255);
-			d.draw = &DrawWelcome;
-			d.startOpen = true;
-			Laboratory::Register(&d);
+			LabAppDesc d;
+
+			RegisterCvarBrowser();
 
 			d = LabAppDesc{};
 			d.id = "core.imgui_demo";

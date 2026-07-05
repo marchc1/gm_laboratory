@@ -18,7 +18,14 @@
 
 using namespace gm_laboratory;
 
+// enable this if you want to see every function call to the filesystem
+// #define USE_FS_TRACE
+#if USE_FS_TRACE
 #define FSTRACE(name) Log("example3", "IFileSystem::%s\n", name)
+#else
+#define FSTRACE(name)
+#endif
+
 MODULE_START()
 
 abstract_class IBaseFileSystemGmod{

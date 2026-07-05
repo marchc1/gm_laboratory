@@ -185,7 +185,7 @@ struct OcclusionParams_t
 #define VENGINE_CLIENT_RANDOM_INTERFACE_VERSION	"VEngineRandom001"
 
 // change this when the new version is incompatable with the old
-#define VENGINE_CLIENT_INTERFACE_VERSION		"VEngineClient014"
+#define VENGINE_CLIENT_INTERFACE_VERSION		"VEngineClient013"
 #define VENGINE_CLIENT_INTERFACE_VERSION_13		"VEngineClient013"
 
 //-----------------------------------------------------------------------------

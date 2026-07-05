@@ -9,21 +9,26 @@
 
 namespace gm_laboratory {
 	IBaseClientDLL* g_ClientDLL = nullptr;
+	IVEngineClient013* g_EngineCL = nullptr;
 	IServerGameDLL* g_ServerDLL = nullptr;
+	IVEngineServer021* g_EngineSV = nullptr;
+	
+	template <typename T>
+	static T* loadModule(const char* module, const char* name) {
+		T* t = nullptr;
+		CSysModule* systemModule = g_pFullFileSystem->LoadModule(module, "GAMEBIN", false);
+		if (systemModule) {
+			CreateInterfaceFn factory = Sys_GetFactory(systemModule);
+			if (factory)
+				t = (T*)factory(name, NULL);
+		}
+		return t;
+	}
 
 	void ConnectGameLibraries() {
-		CSysModule* clientDLLModule = g_pFullFileSystem->LoadModule(CLIENT_DLL, "GAMEBIN", false);
-		if (clientDLLModule) {
-			CreateInterfaceFn clientFactory = Sys_GetFactory(clientDLLModule);
-			if(clientFactory)
-				g_ClientDLL = (IBaseClientDLL*)clientFactory(CLIENT_DLL_INTERFACE_VERSION, NULL);
-		}
-
-		CSysModule* serverDLLModule = g_pFullFileSystem->LoadModule(SERVER_DLL, "GAMEBIN", false);
-		if (serverDLLModule) {
-			CreateInterfaceFn serverFactory = Sys_GetFactory(serverDLLModule);
-			if (serverFactory) 
-				g_ServerDLL = (IServerGameDLL*)serverFactory(INTERFACEVERSION_SERVERGAMEDLL, NULL);
-		}
+		g_ClientDLL = loadModule<IBaseClientDLL>(CLIENT_DLL, CLIENT_DLL_INTERFACE_VERSION);
+		g_ServerDLL = loadModule<IServerGameDLL>(SERVER_DLL, INTERFACEVERSION_SERVERGAMEDLL);
+		g_EngineCL = loadModule<IVEngineClient013>(ENGINE_DLL, VENGINE_CLIENT_INTERFACE_VERSION);
+		g_EngineSV = loadModule<IVEngineServer021>(ENGINE_DLL, INTERFACEVERSION_VENGINESERVER);
 	}
 }

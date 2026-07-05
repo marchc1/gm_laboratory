@@ -25,6 +25,7 @@ add_library(gm_laboratory STATIC
   "native/laboratory/lab_app.h"
   "native/laboratory/laboratory.h"
   "native/laboratory/laboratory.cpp"
+  "native/laboratory/apps/app_cvars.cpp"
   "native/module_api.h"
   "native/modules.h"
   "native/modules.cpp"
