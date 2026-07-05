@@ -18,7 +18,7 @@ DEFINE_MODULE_HOOK(void, PreLoadLibrary, const char*)
 DEFINE_MODULE_HOOK(void, PostLoadLibrary, const char*, void*)
 
 /// <summary> Called very early on in the launcher procedure; good for doing low level modifications </summary>
-DEFINE_MODULE_HOOK(void, PreLauncherMain)
+DEFINE_MODULE_HOOK(void, PreExecuteMain)
 
 /// <summary> Runs before launcher.dll::BootAppSystemGroup::Create (before engine is bootstrapped) </summary>
 DEFINE_MODULE_HOOK(void, PreBootAppSystemCreate)

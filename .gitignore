@@ -412,3 +412,4 @@ custom_modules/*/
 !third_party/source-sdk/lib/public/x64/
 !third_party/source-sdk/lib/public/x64/tier0.lib
 !third_party/source-sdk/lib/public/x64/vstdlib.lib
+CMakeUserPresets.json

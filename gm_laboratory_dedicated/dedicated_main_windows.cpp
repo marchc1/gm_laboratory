@@ -1,4 +1,4 @@
-﻿#include "launcher_main_windows.h"
+﻿#include "dedicated_main_windows.h"
 #include <cstdio>
 #include <cstdlib>
 #include <system_error>
@@ -51,7 +51,7 @@ int ShowErrorBoxAndExitWithCode(_In_z_ const char* error_message,
 
 	char entire_error_message[2048];
 	_snprintf_s(entire_error_message, _TRUNCATE, "%s\n\n%s", error_message, system_error.c_str());
-	MessageBoxA(nullptr, entire_error_message, "Garry's Mod Experiment Toolkit [Launcher] - Error", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+	MessageBoxA(nullptr, entire_error_message, "Garry's Mod Experiment Toolkit [Dedicated] - Error", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
 	return exit_code.value();
 }
 
@@ -146,31 +146,31 @@ int Run(_In_ HINSTANCE instance, _In_opt_ HINSTANCE old_instance, _In_ LPSTR cmd
 	if (!::GetModuleFileNameA(instance, module_name, MAX_PATH))
 		return ShowErrorBoxAndExitWithCode("Please check game installed in the folder with less than " VALVE_OB_TOSTRING(MAX_PATH) " chars deep.\n\nUnable to get module file name from GetModuleFileName.", GetLastErrorCode());
 
-	char base_directory_path[MAX_PATH], launcher_dll_path[MAX_PATH];
+	char base_directory_path[MAX_PATH], dedicated_dll_path[MAX_PATH];
 
 	const char* baseDir = GetBaseDirectory(module_name, base_directory_path);
-	_snprintf_s(launcher_dll_path, _TRUNCATE, "%s\\bin\\win64\\launcher.dll", baseDir);
+	_snprintf_s(dedicated_dll_path, _TRUNCATE, "%s\\bin\\win64\\dedicated.dll", baseDir);
 
 	char user_error[1024];
-	const source::ScopedDll launcher_dll{ launcher_dll_path, LOAD_WITH_ALTERED_SEARCH_PATH };
-	if (!launcher_dll) {
+	const source::ScopedDll dedicated_dll{ dedicated_dll_path, LOAD_WITH_ALTERED_SEARCH_PATH };
+	if (!dedicated_dll) {
 		_snprintf_s(user_error, _TRUNCATE,
-			"Please ensure gm_laboratory_launcher.exe was installed in a folder with less "
-			"than " VALVE_OB_TOSTRING(MAX_PATH) " chars deep. It should live in GarrysMod/bin/win64. If you are not on the x86-64 branch, please switch to it.\n\n"
+			"Please ensure gm_laboratory_dedicated.exe was installed in a folder with less "
+			"than " VALVE_OB_TOSTRING(MAX_PATH) " chars deep. It should live in the same folder as your srcds.exe. If you are not on the x86-64 branch, please switch to it.\n\n"
 			"Attempted to load DLL from path: %s.",
-			launcher_dll_path);
+			dedicated_dll_path);
 
-		return ShowErrorBoxAndExitWithCode(user_error, launcher_dll.error_code());
+		return ShowErrorBoxAndExitWithCode(user_error, dedicated_dll.error_code());
 	}
 
 	SetCurrentDirectoryA(baseDir);
 
-	using LauncherMainFunction = int (*)(HINSTANCE, HINSTANCE, LPSTR, int);
-	constexpr char launcher_main_function_name[]{ "LauncherMain" };
+	using DedicatedMainFunction = int (*)(HINSTANCE, HINSTANCE, LPSTR, int);
+	constexpr char dedicated_main_function_name[]{ "DedicatedMain" };
 
-	const auto [launcher_main, errc] = launcher_dll.GetFunction<LauncherMainFunction>(launcher_main_function_name);
-	if (!launcher_main) {
-		_snprintf_s(user_error, _TRUNCATE, "This shouldn't happen: %s procedure not found in %s's exports", launcher_main_function_name, launcher_dll_path);
+	const auto [dedicated_main, errc] = dedicated_dll.GetFunction<DedicatedMainFunction>(dedicated_main_function_name);
+	if (!dedicated_main) {
+		_snprintf_s(user_error, _TRUNCATE, "This shouldn't happen: %s procedure not found in %s's exports", dedicated_main_function_name, dedicated_dll_path);
 		return ShowErrorBoxAndExitWithCode(user_error, errc);
 	}
 
@@ -193,7 +193,7 @@ int Run(_In_ HINSTANCE instance, _In_opt_ HINSTANCE old_instance, _In_ LPSTR cmd
 	gm_laboratory::DetourManager::Bootstrap();
 	gm_laboratory::Hooks::PreExecuteMain.Invoke();
 
-	return launcher_main(instance, old_instance, cmd_line, window_flags);
+	return dedicated_main(instance, old_instance, cmd_line, window_flags);
 }
 
 int APIENTRY WinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE old_instance, _In_ LPSTR cmd_line, _In_ int window_flags) {

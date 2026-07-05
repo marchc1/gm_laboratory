@@ -23,6 +23,7 @@ endfunction()
 
 add_subdirectory ("gm_laboratory")
 add_subdirectory ("gm_laboratory_launcher")
+add_subdirectory ("gm_laboratory_dedicated")
 add_subdirectory ("custom_modules")
 add_subdirectory ("example_modules")
 
