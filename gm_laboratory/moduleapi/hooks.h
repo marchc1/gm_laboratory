@@ -7,6 +7,9 @@
 #include "moduleapi/event.h"
 #include "globalusings.h"
 
+class ClientClass;
+class ServerClass;
+
 namespace gm_laboratory {
 	namespace Hooks {
 #define DEFINE_MODULE_HOOK(RetType, Name, ...) extern Event<__VA_ARGS__> Name;

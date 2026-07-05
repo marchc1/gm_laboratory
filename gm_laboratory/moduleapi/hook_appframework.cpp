@@ -47,6 +47,7 @@ static int CModAppSystemGroup__Main_Detour(void* self) {
 	SOURCE_SDK_CONNECT()
 
 	Hooks::PreModAppSystemMain.Invoke();
+	ConnectGameLibraries();
 	WalkInterfacesRichly();
 
 	int result = CModAppSystemGroup__Main_Original(self);

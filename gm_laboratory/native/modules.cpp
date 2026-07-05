@@ -13,6 +13,9 @@
 #include "native/sigscan.h"
 #include "moduleapi/hooks.h"
 
+class ClientClass;
+class ServerClass;
+
 namespace gm_laboratory {
 
 	static void* ApiAddDetour(const char* module, const char* pattern, void* detour, std::size_t offset) {

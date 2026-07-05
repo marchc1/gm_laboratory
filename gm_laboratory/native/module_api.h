@@ -1,6 +1,8 @@
 #pragma once
 #include "globalusings.h"
 #include <cstddef>
+#include "client_class.h"
+#include "server_class.h"
 
 namespace gm_laboratory {
 	constexpr unsigned int MODULE_ABI_VERSION = 2026070401;

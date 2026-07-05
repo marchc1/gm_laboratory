@@ -4,27 +4,26 @@
 
 namespace gm_laboratory {
 
-struct DetourSetupContext {
-	bool NotSupported = false;
+	struct DetourSetupContext {
+		bool NotSupported = false;
 
-	void* AddDetour(const char* module, const char* pattern, void* detour, std::size_t offset = 0);
-	void* AddDetourExport(const char* module, const char* exportName, void* detour);
-};
+		void* AddDetour(const char* module, const char* pattern, void* detour, std::size_t offset = 0);
+		void* AddDetourExport(const char* module, const char* exportName, void* detour);
+	};
 
-struct IImplementsDetours {
-	virtual ~IImplementsDetours() = default;
-	virtual void SetupWin64(DetourSetupContext& ctx) { ctx.NotSupported = true; }
-};
+	struct IImplementsDetours {
+		virtual ~IImplementsDetours() = default;
+		virtual void SetupWin64(DetourSetupContext& ctx) { ctx.NotSupported = true; }
+	};
 
-void RegisterDetour(IImplementsDetours* instance);
+	void RegisterDetour(IImplementsDetours* instance);
 
-void* GetOrLoadModule(const char* name);
+	void* GetOrLoadModule(const char* name);
 
-class DetourManager {
-public:
-	static void Bootstrap();
-};
-
+	class DetourManager {
+	public:
+		static void Bootstrap();
+	};
 }
 
 #define REGISTER_DETOUR(TypeName)                                                       \

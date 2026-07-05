@@ -13,6 +13,7 @@ set(SDK_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
 add_library(source_sdk_common INTERFACE)
 
 target_include_directories(source_sdk_common INTERFACE
+  "${SDK_ROOT}/common"
   "${SDK_ROOT}/public"
   "${SDK_ROOT}/public/tier0"
   "${SDK_ROOT}/public/tier1"

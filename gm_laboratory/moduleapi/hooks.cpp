@@ -1,6 +1,9 @@
 #include "moduleapi/hooks.h"
 #include "globalusings.h"
 
+class ClientClass;
+class ServerClass;
+
 namespace gm_laboratory {
 	namespace Hooks {
 

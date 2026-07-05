@@ -6,6 +6,7 @@
 #include "tier3/tier3.h"
 
 #include "native/interface_registry.h"
+#include "connect_game_libraries.h"
 
 #define SOURCE_SDK_CONNECT() { \
 	std::vector<CreateInterfaceFn> factories; \
@@ -17,5 +18,6 @@
 ConnectTier1Libraries(factories.data(), static_cast<int>(factories.size())); \
 ConnectTier2Libraries(factories.data(), static_cast<int>(factories.size())); \
 ConnectTier3Libraries(factories.data(), static_cast<int>(factories.size())); \
+ConnectGameLibraries(); \
 ConVar_Register(0); \
 }
