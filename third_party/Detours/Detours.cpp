@@ -4014,6 +4014,13 @@ namespace Detours {
 		// FindSignature (AVX-512) [AVX512BW]
 		// ----------------------------------------------------------------
 
+#if defined(__clang__)
+#define DETOURS_TARGET_AVX512 __attribute__((target("avx512f,avx512bw")))
+#else
+#define DETOURS_TARGET_AVX512
+#endif
+
+		DETOURS_TARGET_AVX512
 		void const* FindSignatureAVX512(void const* const pAddress, const size_t unSize, char const* const szSignature, const unsigned char unIgnoredByte, const size_t unOffset) noexcept {
 			if (!pAddress || !unSize || !szSignature) {
 				return nullptr;
@@ -4983,6 +4990,7 @@ namespace Detours {
 		// FindData (AVX-512) [AVX512BW]
 		// ----------------------------------------------------------------
 
+		DETOURS_TARGET_AVX512
 		void const* FindDataAVX512(void const* const pAddress, const size_t unSize, unsigned char const* const pData, const size_t unDataSize) noexcept {
 			if (!pAddress || !unSize || !pData || !unDataSize || (unSize < unDataSize)) {
 				return nullptr;

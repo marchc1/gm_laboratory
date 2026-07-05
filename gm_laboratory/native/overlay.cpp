@@ -13,6 +13,7 @@
 
 #include "native/detour_manager.h"
 #include "native/laboratory/laboratory.h"
+#include "native/laboratory/icon_texture.h"
 #include "native/log.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -119,6 +120,8 @@ namespace gm_laboratory {
 
 		ImGui_ImplWin32_Init(g_window);
 		ImGui_ImplDX9_Init(device);
+
+		IconTexture::SetDevice(device);
 
 		g_originalWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrW(g_window, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&WndProc)));
 

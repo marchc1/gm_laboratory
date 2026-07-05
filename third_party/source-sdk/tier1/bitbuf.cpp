@@ -992,7 +992,7 @@ unsigned int bf_read::PeekUBitLong( int numbits )
 	return r;
 }
 
-unsigned int bf_read::ReadUBitLongNoInline( int numbits )
+unsigned int bf_read::ReadUBitLongNoInline( int numbits ) RESTRICT
 {
 	return ReadUBitLong( numbits );
 }

@@ -8,7 +8,33 @@ endif()
 
 project ("gm_laboratory")
 
+if (MSVC)
+  add_compile_options(/arch:AVX2)
+else()
+  add_compile_options(
+    -msse
+    -msse2
+    -msse3
+    -mssse3
+    -msse4.1
+    -msse4.2
+    -mavx
+    -mavx2
+    -mfma
+    -mpclmul
+    -maes
+    -mbmi
+    -mbmi2
+    -mpopcnt
+    -mlzcnt
+    -mf16c
+  )
+endif()
+
+
 set_property(GLOBAL PROPERTY GML_MODULE_TARGETS "")
+
+set(GMLAB_MODULE_DIR "$ENV{USERPROFILE}/gm_laboratory/modules")
 
 function(add_gmlab_module name)
   add_library(${name} SHARED ${ARGN})
@@ -16,7 +42,7 @@ function(add_gmlab_module name)
   target_include_directories(${name} PRIVATE "${CMAKE_SOURCE_DIR}/gm_laboratory")
   set_target_properties(${name} PROPERTIES
     CXX_STANDARD 20
-    RUNTIME_OUTPUT_DIRECTORY "$ENV{USERPROFILE}/gm_laboratory/modules"
+    RUNTIME_OUTPUT_DIRECTORY "${GMLAB_MODULE_DIR}"
   )
   set_property(GLOBAL APPEND PROPERTY GMLAB_MODULE_TARGETS ${name})
 endfunction()

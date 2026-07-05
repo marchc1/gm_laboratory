@@ -25,6 +25,10 @@ add_library(gm_laboratory STATIC
   "native/laboratory/lab_app.h"
   "native/laboratory/laboratory.h"
   "native/laboratory/laboratory.cpp"
+  "native/laboratory/icon_texture.h"
+  "native/laboratory/icon_texture.cpp"
+  "native/laboratory/embedded_icons.h"
+  "native/laboratory/embedded_icons.cpp"
   "native/laboratory/apps/app_cvars.cpp"
   "native/module_api.h"
   "native/modules.h"
@@ -41,6 +45,7 @@ add_library(gm_laboratory STATIC
   "util/connect_game_libraries.cpp" )
 
 target_include_directories(gm_laboratory PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_include_directories(gm_laboratory PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../third_party")
 target_link_libraries(gm_laboratory PUBLIC detours)
 target_link_libraries(gm_laboratory PUBLIC source_sdk)
 target_link_libraries(gm_laboratory PUBLIC imgui)

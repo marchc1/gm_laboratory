@@ -222,6 +222,7 @@ namespace gm_laboratory {
 		app.title = "Console Variables";
 		app.shortLabel = "Var";
 		app.accent = IM_COL32(150, 110, 210, 255);
+		app.iconPath = "oxygen/utilities-terminal.png";
 		app.draw = &DrawCvars;
 		Laboratory::Register(&app);
 	}

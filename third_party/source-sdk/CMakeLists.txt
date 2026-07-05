@@ -49,6 +49,9 @@ function(source_sdk_configure target)
     /fp:fast /GF /Gw /Zc:inline
     /wd4201 /wd4316 /wd4456 /wd4457 /wd4530 /wd4838 /wd5054 /wd5205
   )
+  if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    target_compile_options(${target} PRIVATE -Wno-c++11-narrowing)
+  endif()
 endfunction()
 
 # mathlib
