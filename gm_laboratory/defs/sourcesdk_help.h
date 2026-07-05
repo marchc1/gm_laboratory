@@ -6,7 +6,7 @@
 #include "tier3/tier3.h"
 
 #include "native/interface_registry.h"
-#include "connect_game_libraries.h"
+#include "util/connect_game_libraries.h"
 
 #define SOURCE_SDK_CONNECT() { \
 	std::vector<CreateInterfaceFn> factories; \

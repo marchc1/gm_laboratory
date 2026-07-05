@@ -4,7 +4,7 @@
 #include "defs/function_signatures.h"
 #include "client_class.h"
 #include "server_class.h"
-#include "connect_game_libraries.h"
+#include "util/connect_game_libraries.h"
 
 #include "cdll_int.h"
 #include "eiface.h"

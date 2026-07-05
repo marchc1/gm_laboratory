@@ -463,9 +463,12 @@ class IServerGCLobby;
 abstract_class IServerGameDLL
 {
 public:
+
+	virtual void			GMod_VTablePadding_0() = 0;
+
 	// Initialize the game (one-time call when the DLL is first loaded )
 	// Return false if there is an error during startup.
-	virtual bool			DLLInit(	CreateInterfaceFn engineFactory, 
+	virtual bool			DLLInit(	CreateInterfaceFn engineFactory,
 										CreateInterfaceFn physicsFactory, 
 										CreateInterfaceFn fileSystemFactory, 
 										CGlobalVars *pGlobals) = 0;

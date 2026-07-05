@@ -28,8 +28,8 @@ add_library(gm_laboratory STATIC
   "defs/sourcesdk_help.h"
   "defs/module_help.h" 
   "moduleapi/hook_nettables.cpp" 
-  "connect_game_libraries.h" 
-  "connect_game_libraries.cpp")
+  "util/connect_game_libraries.h" 
+  "util/connect_game_libraries.cpp" )
 
 target_include_directories(gm_laboratory PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(gm_laboratory PUBLIC detours)

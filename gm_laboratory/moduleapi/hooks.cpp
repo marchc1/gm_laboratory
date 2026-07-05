@@ -35,16 +35,14 @@ namespace gm_laboratory {
 
 		void AddClientClassRewriter(RewriteClientClassesFn fn) {
 			PreInitClientClasses += std::function<void(ClientClass*)>([fn](ClientClass* head) {
-				ClientClassEditor editor;
-				editor.ListStart = head;
+				ClientClassesEditor editor(head);
 				fn(editor);
 				});
 		}
 
 		void AddServerClassRewriter(RewriteServerClassesFn fn) {
 			PreInitServerClasses += std::function<void(ServerClass*)>([fn](ServerClass* head) {
-				ServerClassEditor editor;
-				editor.ListStart = head;
+				ServerClassesEditor editor(head);
 				fn(editor);
 				});
 		}
