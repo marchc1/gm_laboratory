@@ -12,6 +12,7 @@
 #include "backends/imgui_impl_dx9.h"
 
 #include "native/detour_manager.h"
+#include "native/laboratory/laboratory.h"
 #include "native/log.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -105,6 +106,7 @@ namespace gm_laboratory {
 			g_context = ImGui::CreateContext();
 			ImGui::StyleColorsDark();
 			ImGui::GetIO().IniFilename = nullptr;
+			ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		}
 		ImGui::SetCurrentContext(g_context);
 
@@ -123,6 +125,7 @@ namespace gm_laboratory {
 		g_backendsReady = true;
 		Log("overlay", "ImGui backends initialised (hwnd %p)\n", g_window);
 
+		Laboratory::Init();
 		InvokeGuarded(InitCallbacks(), "init");
 	}
 
@@ -141,10 +144,14 @@ namespace gm_laboratory {
 			ImGui_ImplWin32_NewFrame();
 			ImGui::NewFrame();
 
+			if (g_visible)
+				Laboratory::Render();
+
 			InvokeGuarded(FrameCallbacks(), "frame");
 
 			ImGui::EndFrame();
 			ImGui::Render();
+			device->SetRenderState(D3DRS_SRGBWRITEENABLE, FALSE);
 			ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 		}
 

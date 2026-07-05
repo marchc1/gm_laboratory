@@ -4,12 +4,13 @@
 #include "client_class.h"
 #include "server_class.h"
 #include "imgui.h"
+#include "native/laboratory/lab_app.h"
 
 struct ImPlotContext;
 struct ImPlot3DContext;
 
 namespace gm_laboratory {
-	constexpr unsigned int MODULE_ABI_VERSION = 2026070502;
+	constexpr unsigned int MODULE_ABI_VERSION = 2026070503;
 	struct InterfaceRegistryEditor;
 
 	struct ModuleAPI {
@@ -34,6 +35,7 @@ namespace gm_laboratory {
 		void (*OnImGuiFrame)(void (*callback)());
 		ImPlotContext* (*GetImPlotContext)();
 		ImPlot3DContext* (*GetImPlot3DContext)();
+		void (*RegisterLabApp)(const LabAppDesc* desc);
 	};
 }
 

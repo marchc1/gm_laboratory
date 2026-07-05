@@ -12,6 +12,7 @@
 #include "native/module_api.h"
 #include "native/sigscan.h"
 #include "native/overlay.h"
+#include "native/laboratory/laboratory.h"
 #include "moduleapi/hooks.h"
 
 class ClientClass;
@@ -58,6 +59,7 @@ namespace gm_laboratory {
 			&ImGuiOverlay::AddFrameCallback,
 			&ImGuiOverlay::GetImPlotContext,
 			&ImGuiOverlay::GetImPlot3DContext,
+			&Laboratory::Register,
 		};
 		return api;
 	}
