@@ -86,6 +86,12 @@ namespace gm_laboratory {
 		return InstallHook(target, detour);
 	}
 
+	void* DetourSetupContext::AddDetourRaw(void* target, void* detour) {
+		if (!target)
+			return nullptr;
+		return InstallHook(target, detour);
+	}
+
 	void DetourManager::Bootstrap() {
 		Log("detours", "Bootstrapping detours...\n");
 

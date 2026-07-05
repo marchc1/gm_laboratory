@@ -18,6 +18,8 @@ add_library(gm_laboratory STATIC
   "native/net_class_editor.cpp"
   "native/vtable_editor.h"
   "native/vtable_editor.cpp"
+  "native/overlay.h"
+  "native/overlay.cpp"
   "native/module_api.h"
   "native/modules.h"
   "native/modules.cpp"

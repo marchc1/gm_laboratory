@@ -3,9 +3,10 @@
 #include <cstddef>
 #include "client_class.h"
 #include "server_class.h"
+#include "imgui.h"
 
 namespace gm_laboratory {
-	constexpr unsigned int MODULE_ABI_VERSION = 2026070402;
+	constexpr unsigned int MODULE_ABI_VERSION = 2026070501;
 	struct InterfaceRegistryEditor;
 
 	struct ModuleAPI {
@@ -23,6 +24,11 @@ namespace gm_laboratory {
 #define DEFINE_MODULE_HOOK(RetType, Name, ...) RetType (*Name)(void (*callback)(__VA_ARGS__));
 #include "defs/hook_events.h"
 #undef DEFINE_MODULE_HOOK
+
+		ImGuiContext* (*GetImGuiContext)();
+		void (*GetImGuiAllocatorFns)(ImGuiMemAllocFunc*, ImGuiMemFreeFunc*, void**);
+		void (*OnImGuiInit)(void (*callback)());
+		void (*OnImGuiFrame)(void (*callback)());
 	};
 }
 

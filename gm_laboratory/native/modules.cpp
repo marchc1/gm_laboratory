@@ -11,6 +11,7 @@
 #include "native/log.h"
 #include "native/module_api.h"
 #include "native/sigscan.h"
+#include "native/overlay.h"
 #include "moduleapi/hooks.h"
 
 class ClientClass;
@@ -50,6 +51,11 @@ namespace gm_laboratory {
 	#define DEFINE_MODULE_HOOK(RetType, Name, ...) &Api##Name,
 	#include "defs/hook_events.h"
 	#undef DEFINE_MODULE_HOOK
+
+			&ImGuiOverlay::GetContext,
+			&ImGuiOverlay::GetAllocatorFns,
+			&ImGuiOverlay::AddInitCallback,
+			&ImGuiOverlay::AddFrameCallback,
 		};
 		return api;
 	}

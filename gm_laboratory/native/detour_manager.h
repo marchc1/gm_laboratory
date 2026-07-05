@@ -9,6 +9,7 @@ namespace gm_laboratory {
 
 		void* AddDetour(const char* module, const char* pattern, void* detour, std::size_t offset = 0);
 		void* AddDetourExport(const char* module, const char* exportName, void* detour);
+		void* AddDetourRaw(void* target, void* detour);
 	};
 
 	struct IImplementsDetours {
