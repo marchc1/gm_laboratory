@@ -18,7 +18,7 @@
 
 using namespace gm_laboratory;
 
-#define FSTRACE(name) Log("filesystem", "IFileSystem::%s\n", name)
+#define FSTRACE(name) Log("example3", "IFileSystem::%s\n", name)
 MODULE_START()
 
 abstract_class IBaseFileSystemGmod{
@@ -238,7 +238,7 @@ CLoggingFileSystem* AcquireProxy() {
 		auto* real = reinterpret_cast<CLoggingFileSystem*>(g_realFileSystemFactory());
 		if (real) {
 			g_loggingFileSystem = new CLoggingFileSystem(real);
-			Log("filesystem", "installed logging filesystem proxy %p wrapping real %p\n", g_loggingFileSystem, real);
+			Log("example3", "installed logging filesystem proxy %p wrapping real %p\n", g_loggingFileSystem, real);
 		}
 	}
 	return g_loggingFileSystem;
@@ -265,7 +265,7 @@ void RewriteFileSystemInterfaces(InterfaceRegistryEditor& editor) {
 		bfs.Reroute(&CreateLoggingBaseFileSystem);
 }
 
-MODULE_MAIN()
-api->Log("example", "Loaded Example Module #3: Interface Writing (abi %u)\n", api->abiVersion);
-api->AddInterfaceRewriter(&RewriteFileSystemInterfaces);
-MODULE_END()
+MODULE_MAIN() {
+	api->Log("example3", "Loaded Example Module #3: Interface Writing (abi %u)\n", api->abiVersion);
+	api->AddInterfaceRewriter(&RewriteFileSystemInterfaces);
+} MODULE_END()

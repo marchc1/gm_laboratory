@@ -44,6 +44,8 @@ namespace gm_laboratory {
 			&ApiAddDetour,
 			&ApiAddDetourExport,
 			&Hooks::AddInterfaceRewriter,
+			&Hooks::AddClientClassRewriter,
+			&Hooks::AddServerClassRewriter,
 
 	#define DEFINE_MODULE_HOOK(RetType, Name, ...) &Api##Name,
 	#include "defs/hook_events.h"

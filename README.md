@@ -42,9 +42,9 @@ and a `module.cpp`:
 using namespace gm_laboratory;
 
 MODULE_START()
-MODULE_MAIN()
-g_api->Log("my_module", "hello from my module\n");
-MODULE_END()
+MODULE_MAIN(){
+	g_api->Log("my_module", "hello from my module\n");
+} MODULE_END()
 ```
 
 `custom_modules/` and `example_modules/` are both scanned automatically by CMake, so any subfolder with a `CMakeLists.txt` gets built

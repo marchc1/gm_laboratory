@@ -20,5 +20,8 @@ namespace gm_laboratory {
 
 		void AddInterfaceRewriter(RewriteInterfacesFn fn);
 		void ExecRewriteInterfaces(InterfaceReg* reg);
+
+		void AddClientClassRewriter(RewriteClientClassesFn fn);
+		void AddServerClassRewriter(RewriteServerClassesFn fn);
 	}
 }

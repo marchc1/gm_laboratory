@@ -1,8 +1,6 @@
 #include "moduleapi/hooks.h"
 #include "globalusings.h"
-
-class ClientClass;
-class ServerClass;
+#include "native/net_class_editor.h"
 
 namespace gm_laboratory {
 	namespace Hooks {
@@ -33,6 +31,22 @@ namespace gm_laboratory {
 			editor.ListStart = reg;
 			for (auto& fn : RewriteInterfacesFns())
 				fn(editor);
+		}
+
+		void AddClientClassRewriter(RewriteClientClassesFn fn) {
+			PreInitClientClasses += std::function<void(ClientClass*)>([fn](ClientClass* head) {
+				ClientClassEditor editor;
+				editor.ListStart = head;
+				fn(editor);
+				});
+		}
+
+		void AddServerClassRewriter(RewriteServerClassesFn fn) {
+			PreInitServerClasses += std::function<void(ServerClass*)>([fn](ServerClass* head) {
+				ServerClassEditor editor;
+				editor.ListStart = head;
+				fn(editor);
+				});
 		}
 
 	}
