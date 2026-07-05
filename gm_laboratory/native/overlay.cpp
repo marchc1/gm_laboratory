@@ -6,6 +6,8 @@
 
 #include "imgui.h"
 #include "imgui_internal.h"
+#include "implot.h"
+#include "implot3d.h"
 #include "backends/imgui_impl_win32.h"
 #include "backends/imgui_impl_dx9.h"
 
@@ -23,6 +25,8 @@ namespace gm_laboratory {
 	static ResetFn g_resetOriginal = nullptr;
 
 	static ImGuiContext* g_context = nullptr;
+	static ImPlotContext* g_implotContext = nullptr;
+	static ImPlot3DContext* g_implot3dContext = nullptr;
 	static HWND g_window = nullptr;
 	static WNDPROC g_originalWndProc = nullptr;
 	static bool g_backendsReady = false;
@@ -104,6 +108,13 @@ namespace gm_laboratory {
 		}
 		ImGui::SetCurrentContext(g_context);
 
+		if (!g_implotContext) {
+			ImPlot::SetImGuiContext(g_context);
+			g_implotContext = ImPlot::CreateContext();
+		}
+		if (!g_implot3dContext)
+			g_implot3dContext = ImPlot3D::CreateContext();
+
 		ImGui_ImplWin32_Init(g_window);
 		ImGui_ImplDX9_Init(device);
 
@@ -129,9 +140,6 @@ namespace gm_laboratory {
 			ImGui_ImplDX9_NewFrame();
 			ImGui_ImplWin32_NewFrame();
 			ImGui::NewFrame();
-
-			if (g_visible)
-				ImGui::ShowDemoWindow();
 
 			InvokeGuarded(FrameCallbacks(), "frame");
 
@@ -218,6 +226,14 @@ namespace gm_laboratory {
 
 	ImGuiContext* ImGuiOverlay::GetContext() {
 		return g_context;
+	}
+
+	ImPlotContext* ImGuiOverlay::GetImPlotContext() {
+		return g_implotContext;
+	}
+
+	ImPlot3DContext* ImGuiOverlay::GetImPlot3DContext() {
+		return g_implot3dContext;
 	}
 
 	void ImGuiOverlay::GetAllocatorFns(ImGuiMemAllocFunc* alloc, ImGuiMemFreeFunc* freeFn, void** userData) {

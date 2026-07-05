@@ -1,6 +1,8 @@
 add_subdirectory("../third_party/Detours" "../third_party/Detours")
 add_subdirectory("../third_party/source-sdk" "../third_party/source-sdk")
 add_subdirectory("../third_party/imgui" "../third_party/imgui")
+add_subdirectory("../third_party/implot" "../third_party/implot")
+add_subdirectory("../third_party/implot3d" "../third_party/implot3d")
 
 add_library(gm_laboratory STATIC
   "defs/dll_names.h"
@@ -38,6 +40,8 @@ target_include_directories(gm_laboratory PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(gm_laboratory PUBLIC detours)
 target_link_libraries(gm_laboratory PUBLIC source_sdk)
 target_link_libraries(gm_laboratory PUBLIC imgui)
+target_link_libraries(gm_laboratory PUBLIC implot)
+target_link_libraries(gm_laboratory PUBLIC implot3d)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET gm_laboratory PROPERTY CXX_STANDARD 20)
 endif()

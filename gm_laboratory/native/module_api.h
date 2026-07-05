@@ -5,8 +5,11 @@
 #include "server_class.h"
 #include "imgui.h"
 
+struct ImPlotContext;
+struct ImPlot3DContext;
+
 namespace gm_laboratory {
-	constexpr unsigned int MODULE_ABI_VERSION = 2026070501;
+	constexpr unsigned int MODULE_ABI_VERSION = 2026070502;
 	struct InterfaceRegistryEditor;
 
 	struct ModuleAPI {
@@ -29,6 +32,8 @@ namespace gm_laboratory {
 		void (*GetImGuiAllocatorFns)(ImGuiMemAllocFunc*, ImGuiMemFreeFunc*, void**);
 		void (*OnImGuiInit)(void (*callback)());
 		void (*OnImGuiFrame)(void (*callback)());
+		ImPlotContext* (*GetImPlotContext)();
+		ImPlot3DContext* (*GetImPlot3DContext)();
 	};
 }
 

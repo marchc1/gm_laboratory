@@ -56,6 +56,8 @@ namespace gm_laboratory {
 			&ImGuiOverlay::GetAllocatorFns,
 			&ImGuiOverlay::AddInitCallback,
 			&ImGuiOverlay::AddFrameCallback,
+			&ImGuiOverlay::GetImPlotContext,
+			&ImGuiOverlay::GetImPlot3DContext,
 		};
 		return api;
 	}

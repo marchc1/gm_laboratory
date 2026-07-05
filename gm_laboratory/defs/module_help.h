@@ -2,6 +2,10 @@
 #include "defs/sourcesdk_help.h"
 #include "native/module_api.h"
 
+#include "imgui.h"
+#include "implot.h"
+#include "implot3d.h"
+
 #define MODULE_SOURCE_SDK_CONNECT()	g_api->PostHostInit([](bool) { SOURCE_SDK_CONNECT(); });
 
 #define MODULE_IMGUI_CONNECT() g_api->OnImGuiInit([]() { \
@@ -9,6 +13,15 @@
 	ImGuiMemAllocFunc allocFn; ImGuiMemFreeFunc freeFn; void* userData; \
 	g_api->GetImGuiAllocatorFns(&allocFn, &freeFn, &userData); \
 	ImGui::SetAllocatorFunctions(allocFn, freeFn, userData); \
+});
+
+#define MODULE_IMPLOT_CONNECT() g_api->OnImGuiInit([]() { \
+	ImPlot::SetImGuiContext(g_api->GetImGuiContext()); \
+	ImPlot::SetCurrentContext(g_api->GetImPlotContext()); \
+});
+
+#define MODULE_IMPLOT3D_CONNECT() g_api->OnImGuiInit([]() { \
+	ImPlot3D::SetCurrentContext(g_api->GetImPlot3DContext()); \
 });
 
 #define MODULE_START() static const ModuleAPI* g_api = nullptr;
