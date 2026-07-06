@@ -56,7 +56,7 @@ namespace gm_laboratory {
 
 	void* DetourSetupContext::AddDetour(const char* module, const char* pattern, void* detour, std::size_t offset) {
 		void* moduleAddress = GetOrLoadModule(module);
-		AssertMsg(moduleAddress, "module %s could not be found", module, pattern);
+		AssertMsg(moduleAddress, "module %s could not be found", module);
 		if (!moduleAddress) {
 			Log("detours", "Cannot find module %s\n", module);
 			return nullptr;
@@ -76,10 +76,13 @@ namespace gm_laboratory {
 
 	void* DetourSetupContext::AddDetourExport(const char* module, const char* exportName, void* detour) {
 		void* moduleAddress = GetOrLoadModule(module);
+		AssertMsg(moduleAddress, "module %s could not be found", module);
+
 		if (!moduleAddress)
 			return nullptr;
 
 		void* target = reinterpret_cast<void*>(GetProcAddress(static_cast<HMODULE>(moduleAddress), exportName));
+		AssertMsg(target, "module %s could not find export named %s", module, exportName);
 		if (!target)
 			return nullptr;
 
